@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+  <adminhtml_catalog_product_index>
+    <reference name="head">
+      <action method="addCss">
+        <name>productaction.css</name>
+      </action>
+    </reference>
+  </adminhtml_catalog_product_index>
+  
+</layout>

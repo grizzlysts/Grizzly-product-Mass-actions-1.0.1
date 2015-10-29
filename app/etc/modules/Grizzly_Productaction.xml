@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Config file for the Diaper Kind Recurring payment method
+ */
+-->
+<config>
+    <modules>
+       
+        <Grizzly_Productaction>
+            <active>True</active>
+            <codePool>community</codePool>
+	</Grizzly_Productaction>
+    </modules>
+</config>
+
+

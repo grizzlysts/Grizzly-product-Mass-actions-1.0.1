@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Grizzly_Productaction>
+            <version>1.0.1</version>
+        </Grizzly_Productaction>
+    </modules>
+	<frontend>
+		<routers>
+			<productaction>
+				<use>standard</use>
+				<args>
+					<module>Grizzly_Productaction</module>
+					<frontName>productaction</frontName>
+				</args>
+			</productaction>
+		</routers>
+		
+		<layout>
+			<updates>
+				<productaction module="Grizzly_Productaction">
+					<file>massemail.xml</file>
+				</productaction>
+			</updates>
+		</layout>
+
+	</frontend>
+
+	<global>
+        
+		<models>
+			
+			<productaction>
+				<class>Grizzly_Productaction_Model</class>
+				
+			</productaction>
+
+		</models>
+
+		<!-- look in this directory for helper classes -->
+		<helpers>
+			<productaction>
+				<class>Grizzly_Productaction_Helper</class>
+			</productaction>
+		</helpers>
+        
+
+	</global>
+
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<grizzly_productaction before="Mage_Adminhtml">Grizzly_Productaction_Adminhtml</grizzly_productaction>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>
+	</admin>
+
+	<adminhtml>
+
+		<events>
+			<core_block_abstract_prepare_layout_before>
+			    <observers>
+				<productaction_core_block_abstract_prepare_layout_before>
+				    <class>productaction/observer</class>
+				    <method>addAssignAction</method>
+				</productaction_core_block_abstract_prepare_layout_before>
+			    </observers>
+			</core_block_abstract_prepare_layout_before>
+		</events>
+
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<grizzly_productaction>
+							<title>Mass Product Actions</title>
+							<sort_order>20</sort_order>
+						</grizzly_productaction>
+						<system>
+							<children>
+								<config>
+									<children>
+										<grizzly_productaction translate="title" module="productaction">
+											<title>productaction</title>
+											<sort_order>52</sort_order>
+										</grizzly_productaction>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+
+		<layout>
+			<updates>
+				<orderedit>
+					<file>productaction.xml</file>
+				</orderedit>
+			</updates>
+		</layout>
+
+	</adminhtml>
+
+   
+
+	
+</config>
