@@ -206,7 +206,40 @@ class Grizzly_Productaction_Model_Observer
                             )
                         ));
                     }
-
+					//modify wholesale price
+					if (strpos($select_action,'modwholesaleprice') !== false)
+                    {
+                        $block->addItem('wholesaleprice', array(
+                            'label' => 'Modify Wholesale Price',
+                            'url' => Mage::app()->getStore()->getUrl('*/massassign/wholesaleprice'),
+                            'additional'   => array(
+                            'visibility'    => array(
+                                 'name'     => 'wholesaleprice',
+                                 'type'     => 'text',
+                                 'class'    => 'required-entry',
+                                 'label'    => Mage::helper('catalog')->__('Enter value'),
+                                 
+                             )
+                            )
+                        ));
+                    }
+					//modify retailer price
+					if (strpos($select_action,'modretailerprice') !== false)
+                    {
+                        $block->addItem('retailerprice', array(
+                            'label' => 'Modify Retailer Price',
+                            'url' => Mage::app()->getStore()->getUrl('*/massassign/retailerprice'),
+                            'additional'   => array(
+                            'visibility'    => array(
+                                 'name'     => 'retailerprice',
+                                 'type'     => 'text',
+                                 'class'    => 'required-entry',
+                                 'label'    => Mage::helper('catalog')->__('Enter value'),
+                                 
+                             )
+                            )
+                        ));
+                    }
                     //Modify visibility starts
 
                     if (strpos($select_action,'modvis') !== false)

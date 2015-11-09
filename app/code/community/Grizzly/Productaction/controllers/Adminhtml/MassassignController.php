@@ -761,7 +761,103 @@ class Grizzly_Productaction_Adminhtml_MassassignController extends Mage_Adminhtm
 
     }
 
+	//wholesale price update
+	public function wholesalepriceAction()
+    {
+        $this->loadLayout();
+        $this->renderLayout();
+        $productIds = $this->getRequest()->getParam('product');
+        $storeId = Mage::app()->getStore()->getId();
+        if(!is_array($productIds)) 
+        {
+             Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select product(s).'));
+        }
+        else
+        {
+            foreach ($productIds as $productId) 
+                {
+                    $product = Mage::getModel('catalog/product')->load($productId);				
+                    $wholesaleprice = $this->getRequest()->getPost('wholesaleprice');
+                    if(!is_numeric($wholesaleprice)) 
+                    {
+					   $this->_getSession()->addError('Please enter valid value. e.g 4,3.2,10');
+                        $this->_redirect('*/catalog_product/index');
+                        return false;
+                    }                    
+                    try
+                    {   
+						$g_PricingData = array();
+						$currentg_PricingDatas = $product->getData('group_price');
+						foreach($currentg_PricingDatas as $currentg_PricingData){
+							if($currentg_PricingData['cust_group']!=2){
+								$g_PricingData[] = $currentg_PricingData;
+							}							
+						}
+						$g_PricingData[] = array ('website_id'=>0, 'cust_group'=>2, 'price'=>$wholesaleprice);						
+						$product->setData('group_price',$g_PricingData); 
+                        $product->save();
+                        $this->_redirect('*/catalog_product/index');
+                        Mage::getSingleton('core/session')->addSuccess('The Action have been completed successfully.');   
+                        Mage::app()->cleanCache();
+                    }
+                    catch(Exception $e)
+                    {           
+                        Mage::getSingleton('core/session')->addError($e->getMessage());
+                        $this->_redirect('*/catalog_product/index');
+                        return false;
+                    }
+                }
+        }
+    }
 
+	//retailer price update
+	public function retailerpriceAction()
+    {
+        $this->loadLayout();
+        $this->renderLayout();
+        $productIds = $this->getRequest()->getParam('product');
+        $storeId = Mage::app()->getStore()->getId();
+        if(!is_array($productIds)) 
+        {
+             Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select product(s).'));
+        }
+        else
+        {
+            foreach ($productIds as $productId) 
+                {
+                    $product = Mage::getModel('catalog/product')->load($productId);				
+                    $retailerprice = $this->getRequest()->getPost('retailerprice');
+                    if(!is_numeric($retailerprice)) 
+                    {
+					   $this->_getSession()->addError('Please enter valid value. e.g 4,3.2,10');
+                        $this->_redirect('*/catalog_product/index');
+                        return false;
+                    }                    
+                    try
+                    {   
+						$g_PricingData = array();
+						$currentg_PricingDatas = $product->getData('group_price');
+						foreach($currentg_PricingDatas as $currentg_PricingData){
+							if($currentg_PricingData['cust_group']!=3){
+								$g_PricingData[] = $currentg_PricingData;
+							}							
+						}
+						$g_PricingData[] = array ('website_id'=>0, 'cust_group'=>3, 'price'=>$retailerprice);						
+						$product->setData('group_price',$g_PricingData); 
+                        $product->save();
+                        $this->_redirect('*/catalog_product/index');
+                        Mage::getSingleton('core/session')->addSuccess('The Action have been completed successfully.');   
+                        Mage::app()->cleanCache();
+                    }
+                    catch(Exception $e)
+                    {           
+                        Mage::getSingleton('core/session')->addError($e->getMessage());
+                        $this->_redirect('*/catalog_product/index');
+                        return false;
+                    }
+                }
+        }
+    }
 
 
 
